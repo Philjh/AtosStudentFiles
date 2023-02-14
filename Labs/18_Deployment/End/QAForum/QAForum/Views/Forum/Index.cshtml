@@ -1,0 +1,49 @@
+﻿@model IEnumerable<QAForum.ViewModels.ForumViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Welcome to the Forums!</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-secondary">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfThreads)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfThreads)
+            </td>
+            <td>
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ForumId },
+                                               new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.ForumId },
+                                               new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ForumId },
+                                               new { @class = "btn btn-outline-secondary" })
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

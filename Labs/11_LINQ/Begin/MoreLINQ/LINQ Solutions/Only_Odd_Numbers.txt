@@ -1,0 +1,3 @@
+﻿            // LINQ (hint: Any() All())
+            Assert.False(numbers.Any(i => i % 2 == 0));
+            Assert.True(numbers.All(i => i % 2 == 1));

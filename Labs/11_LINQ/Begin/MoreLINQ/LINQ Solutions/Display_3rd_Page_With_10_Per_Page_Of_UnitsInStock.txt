@@ -1,0 +1,6 @@
+﻿            // Using LINQ (hint: from/where/select Skip(), Take() )
+            IEnumerable<Product> paginate2 = (from p in GetProducts()
+                                              where p.UnitsInStock>0
+                                              select p).Skip((pageNumber - 1) * PRODUCTS_PER_PAGE).Take(PRODUCTS_PER_PAGE);
+            Assert.Equal(23, paginate2.First().ProductID);
+            Assert.Equal(34, paginate2.Last().ProductID);

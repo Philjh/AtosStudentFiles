@@ -1,0 +1,13 @@
+﻿@model IEnumerable<QAForum.ViewModels.ThreadViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-secondary">Create New</a>
+</p>
+
+<partial name="_PartialThreadList" />

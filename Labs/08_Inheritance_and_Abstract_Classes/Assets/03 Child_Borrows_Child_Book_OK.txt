@@ -1,0 +1,7 @@
+[Fact]
+public void Child_Borrows_Child_Book_OK()
+{
+    // a junior member (under 16) can borrow only child category books
+    Book childBook = library.GetBook(101);
+    Assert.True(greta.Borrow(childBook));
+}

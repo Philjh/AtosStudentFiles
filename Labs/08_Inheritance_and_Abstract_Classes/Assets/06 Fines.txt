@@ -1,0 +1,15 @@
+        [Fact]
+        public void Child_Pays_Fine_From_Cash_Fund()
+        {
+            greta.CashFund = 20M;
+            greta.PayFine(7M);
+            Assert.Equal(13M,greta.CashFund);
+        }
+
+        [Fact]
+        public void Adult_Pays_Fine_By_Bank_Transfer()
+        {
+            donald.SetUpBankTransferLimit(20M);
+            donald.PayFine(7M);
+            Assert.Equal(13M, donald.BankTransferAvailable);
+        }

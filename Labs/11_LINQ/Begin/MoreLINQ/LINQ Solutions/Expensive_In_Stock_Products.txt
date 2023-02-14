@@ -1,0 +1,6 @@
+﻿            // Using LINQ (hint: from/where/select Count() )
+            var expensiveInStockProducts2 =
+                from prod in GetProducts()
+                where prod.UnitsInStock > 0 && prod.UnitPrice > 3.00M
+                select prod;
+            Assert.Equal(71, expensiveInStockProducts2.Count());

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<QAForum.ViewModels.ThreadViewModel>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)<br />
+                    <small>by @Html.DisplayFor(modelItem => item.UserName)</small>
+                </td>
+                <td>
+                    <div class="btn-toolbar">
+                        <div class="btn-group btn-group-xs">
+                            @Html.ActionLink("Edit", "Edit", "Thread",
+         new { id = item.ThreadId }, new { @class = "btn btn-outline-secondary" })
+
+                            @Html.ActionLink("Details", "Details", "Thread",
+         new { id = item.ThreadId }, new { @class = "btn btn-outline-secondary" })
+
+                            @Html.ActionLink("Delete", "Delete", "Thread",
+         new { id = item.ThreadId }, new { @class = "btn btn-outline-secondary" })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

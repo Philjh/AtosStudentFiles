@@ -1,0 +1,9 @@
+        [Fact]
+        public void Adult_Can_Borrow_Any_Book()
+        {
+            // a junior member (under 16) can borrow only child category books
+            Book adultBook = library.GetBook(100);
+            Book childBook = library.GetBook(101);
+            Assert.True(donald.Borrow(adultBook));
+            Assert.True(donald.Borrow(childBook));
+        }

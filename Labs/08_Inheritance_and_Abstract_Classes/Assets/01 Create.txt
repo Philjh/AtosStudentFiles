@@ -1,0 +1,53 @@
+        [Fact]
+        public void Create()
+        {
+            Library library = new Library();
+            Member greta = library.Add(name: "Greta Thunberg", age: 15);
+            Member donald = donald = library.Add(name: "Donald Trump", age: 73);
+
+            Assert.Equal(2, library.NumberOfMembers);
+            Assert.Equal(1, greta.MembershipNumber);
+            Assert.Equal(2, donald.MembershipNumber);
+        }
+
+#######################################################################################
+
+Library
+-------
+    public class Library
+    {
+        Dictionary<int, Member> members = new Dictionary<int, Member>();
+
+        public int NumberOfMembers => members.Keys.Count;
+
+        int GetNextFreeMembershipNumber()
+        {
+            return (members.Keys.Count == 0) ? 1 : members.Keys.Max() + 1;
+        }
+
+        public Member Add(string name, int age)
+        {
+            Member member = new Member(name, age, GetNextFreeMembershipNumber());
+            members.Add(member.MembershipNumber, member);
+            return member;
+        }
+    }
+
+#######################################################################################
+
+Member
+------
+    public class Member
+    {
+        public string Name { get; }
+        public int MembershipNumber { get; }
+        public int Age { get; }
+
+        public Member(string name, int age, int membershipNumber)
+        {
+            this.Name = name;
+            this.Age = age;
+            this.MembershipNumber = membershipNumber;
+        }
+    }
+

@@ -1,0 +1,6 @@
+﻿            // Using LINQ (hint: from/orderby/select ToList())
+            var sortedWords2 =
+                (from w in words
+                orderby w
+                select w).ToList();
+            Assert.Equal("cherry", sortedWords2[2]);

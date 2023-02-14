@@ -1,0 +1,21 @@
+    public class UnitTest1
+    {
+        Library library;
+        Member greta;
+        Member donald;
+
+        public UnitTest1()
+        {
+            library = new Library();
+            greta = library.Add(name: "Greta Thunberg", age: 15);
+            donald = donald = library.Add(name: "Donald Trump", age: 73);
+        }
+
+        [Fact]
+        public void Create()
+        {
+            Assert.Equal(2, library.NumberOfMembers);
+            Assert.Equal(1, greta.MembershipNumber);
+            Assert.Equal(2, donald.MembershipNumber);
+        }
+    }

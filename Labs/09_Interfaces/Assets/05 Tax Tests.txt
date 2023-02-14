@@ -1,0 +1,13 @@
+        [Fact]
+        public void Evaluate_UK_Tax()
+        {
+            Product product = new Product(50M, new UKTaxRules(true));
+            Assert.Equal(18.75M, product.GetTotalTax());
+        }
+
+        [Fact]
+        public void Evaluate_US_Tax()
+        {
+            Product product = new Product(50M, new USTaxRules());
+            Assert.Equal(7.5M, product.GetTotalTax());
+        }

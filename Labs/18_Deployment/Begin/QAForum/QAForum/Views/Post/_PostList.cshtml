@@ -1,0 +1,36 @@
+﻿@model IEnumerable<QAForum.ViewModels.PostViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-sm-9">
+            In the thread "@Html.DisplayFor(modelItem => item.Thread)"
+        </div>
+        <div class="col-sm-3">
+            <div class="btn-toolbar">
+                <div class="btn-group btn-group-sm">
+                    @Html.ActionLink("Edit", "Edit", "Post",
+               new { id = item.PostId }, new { @class = "btn btn-outline-secondary" })
+                    @Html.ActionLink("Details", "Details", "Post",
+               new { id = item.PostId }, new { @class = "btn btn-outline-secondary" })
+                    @Html.ActionLink("Delete", "Delete", "Post",
+               new { id = item.PostId }, new { @class = "btn btn-outline-secondary" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 ">
+            <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
+            <br />
+            <small>
+                by @Html.DisplayFor(modelItem => item.UserName)
+            </small>
+        </div>
+        <div class="col-sm-3">
+            @Html.DisplayFor(modelItem => item.PostDateTime)
+        </div>
+    </div>
+    <hr />
+    <br />
+}

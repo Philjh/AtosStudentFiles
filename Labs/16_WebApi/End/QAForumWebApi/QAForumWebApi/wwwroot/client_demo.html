@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Web API Client demo</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1>Web API Client Demo</h1>
+        <h3>A demonstration of how to acess Web API controllers from JavaScript</h3>
+
+        <p>
+            This page shows how to use JQuery to access a RESTful service, such as a WebAPI service. JQuery includes a number
+            of functions specifically designed to make AJAX requests (Asynchronous JavaScript and XML - or, in our case, JSON
+            rather than XML), two of which are used in this demonstration.
+        </p>
+        <p>
+            When you view the forums, the page uses the <code>$.getJSON()</code> function. This sends a GET request to the server. It expects
+            the body of the response to contain JSON, which it then parses before invoking a callback function, passing the parsed
+            response data as a parameter.
+        </p>
+        <p>
+            When you create a new forum, the page uses the <code>$.ajax()</code> function. This is the most general of all the functions
+            available. It is highly configurable, and thus can be used to send any AJAX request. We need to use this function,
+            rather than the shorter <code>$.post()</code> which is usually used to send POST requests, because the latter fixes the content
+            type as <code>application/x-www-form-urlencoded</code>, whereas we can use <code>$.ajax()</code> to set the content type to
+            <code>application/json</code> which is what's needed for our WebAPI action.
+        </p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h5>
+                    Add a Forum
+                </h5>
+                <form action="#">
+                    <p>
+                        Enter the name of the forum: <input type="text" name="title" id="title" value="" />
+                    </p>
+                    <p>
+                        (Must be at least 4 characters)
+                    </p>
+                    <p>
+                        <button id="post" class="btn btn-secondary btn-sm">Create</button>
+                    </p>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <h5>
+                    View Forums
+                </h5>
+                <p>
+                    <button id="get" class="btn btn-secondary btn-sm">Load Forums</button>
+                </p>
+            </div>
+        </div>
+
+        <div id="output"></div>
+
+    </div>
+
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+
+
+    <!--
+        JavaScript code should normally be in a separate file. We've included
+        it within the HTML file to make it more convenient for you to find it.
+    -->
+    <script>
+        $(function () {
+            var error = function(jqXHR) {
+                try {
+                    var type = jqXHR.getResponseHeader('Content-Type');
+                    if (type.startsWith('text/html')) {
+                        // Extract the <main> tag from the response, and display it
+                        var responseHtml = $(jqXHR.responseText);
+                        var main = $('main', responseHtml);
+                        $('#output').html(main);
+                        return;
+                    } else if (type.startsWith('text/plain')) {
+                        var errorMessage = $('<div>');
+                        errorMessage.append($('<h3>').text('Error'));
+                        errorMessage.append($('<p>').text(jqXHR.response));
+                        $('#output').html(errorMessage);
+                        return;
+                    } else if (type.startsWith('application/problem+json')) {
+                        var errorMessage = $('<div>');
+                        errorMessage.append($('<h3>').text('Error'));
+                        $.each(jqXHR.responseJSON.errors.Title, function (i, t) {
+                            errorMessage.append($('<p>').text(t));
+                        });
+                        $('#output').html(errorMessage);
+                        return;
+                    }
+                }
+                catch { } // If anything goes wrong here, just fall through to the default error handler
+                finally { }
+
+                var errorMessage = $('<div>');
+                errorMessage.append($('<h3>').text('Error'));
+                errorMessage.append($('<p>').text('Something went wrong. Code: ' + jqXHR.status));
+                $('#output').html(errorMessage);
+            }
+
+            $('#get').click(function () {
+                // This code runs when the GET button is clicked
+                var pleaseWait = $('<div>');
+                pleaseWait.append($('<h3>').text('Please wait'));
+                pleaseWait.append($('<p>').text('Loading the forums...'));
+                $('#output').html(pleaseWait);
+
+                $.getJSON("/api/Forum")  // This line sends a GET request, and parses the JSON result
+                    .done(function (data) {
+                        // If the GET request succeeds
+                        var output = $('<div>');
+                        output.append($('<h3>').text('Here are the forums:'));
+                        $.each(data, function (i, forum) {
+                            output.append($('<p>').text(forum.title));
+                        });
+                        $('#output').html(output);
+                    }).fail(function (jqXHR) {
+                        error(jqXHR);
+                    });
+            });
+
+            $('#post').click(function (e) {
+                // This code runs when the POST button is clicked
+                e.preventDefault();
+                var pleaseWait = $('<div>');
+                pleaseWait.append($('<h3>').text('Please wait'));
+                pleaseWait.append($('<p>').text('Adding the forum...'));
+                $('#output').html(pleaseWait);
+
+                var forum = { title: $('#title').val() };
+
+                // This command sends the POST request to the server
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Forum",
+                    data: JSON.stringify(forum),
+                    contentType: "application/json; charset=utf-8"
+
+                }).done(function () {
+                    // If the POST request succeeds
+                    var output = $('<div>');
+                    output.append($('<h3>').text('Success'));
+                    output.append($('<p>').text('The forum has been added'));
+                    $('#output').html(output);
+                }).fail(function (jqXHR) {
+                    error(jqXHR);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+﻿            // Using LINQ (hint: Where() )
+            var lengthLTIndex2 = digits.Where((digit, index) => digit.Length <= index);
+            Assert.Equal(6, lengthLTIndex2.Count());

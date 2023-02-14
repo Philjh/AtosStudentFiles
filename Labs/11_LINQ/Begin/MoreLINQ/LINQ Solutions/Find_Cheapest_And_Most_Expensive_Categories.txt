@@ -1,0 +1,17 @@
+﻿            // Using LINQ (hint: from/group, OrderBy(), First(), Last(), Sum()
+            var groupByCategory2 = from prod in GetProducts()
+                                  group prod by prod.Category;
+
+            var orderedCategories = groupByCategory2.OrderBy(g => g.Sum(p => p.UnitPrice));
+
+            string strMinCategoryName2 = orderedCategories.First().Key;
+            decimal minCategoryPrices2 = orderedCategories.First().Sum(p => p.UnitPrice);
+
+            string strMaxCategoryName2 = orderedCategories.Last().Key;
+            decimal maxCategoryPrices2 = orderedCategories.Last().Sum(p => p.UnitPrice);
+
+            Assert.Equal("Beverages", strMaxCategoryName2);
+            Assert.Equal(455.75M, maxCategoryPrices2);
+
+            Assert.Equal("Grains/Cereals", strMinCategoryName2);
+            Assert.Equal(141.75M, minCategoryPrices2);

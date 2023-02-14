@@ -1,0 +1,14 @@
+        [Fact]
+        public void Compare_People()
+        {
+            List<Person> spiceGirls = new List<Person>() {
+                new Person("Baby", "Finchley", dob:new DateTime(1976, 1, 21) ),
+                new Person("Posh", "Harlow", dob:new DateTime(1974, 4, 17) ),
+                new Person("Ginger", "Watford", dob:new DateTime(1972, 8, 6) ),
+                };
+
+            spiceGirls.Sort();
+            Assert.Equal("Ginger", spiceGirls[0].Name);
+            Assert.Equal("Posh", spiceGirls[1].Name);
+            Assert.Equal("Baby", spiceGirls[2].Name);
+        }

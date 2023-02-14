@@ -1,0 +1,7 @@
+        [Fact]
+        public void Clone_A_Spice_Girl()
+        {
+            Person baby = new Person("Baby", "Finchley", dob: new DateTime(1976, 1, 21));
+            Person babyClone = baby.Clone();
+            Assert.Equal(baby, babyClone);
+        }

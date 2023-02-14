@@ -1,0 +1,5 @@
+﻿            // Using LINQ (hint: from/orderby/descending/select First())
+            var sortedProducts = (from prod in GetProducts()
+                                  orderby prod.UnitPrice descending
+                                  select prod).Take(10).Reverse();
+            Assert.Equal(45.6M, sortedProducts.First().UnitPrice);

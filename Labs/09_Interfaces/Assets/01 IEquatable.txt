@@ -1,0 +1,15 @@
+        [Fact]
+        public void IEquatable_Are_These_The_Same_People()
+        {
+            Person donald1 = new Person("Donald", "Trump Tower", new DateTime(1946, 6, 14));
+            Person donald2 = new Person("Donald", "Trump Tower", new DateTime(1946, 6, 14));
+            Assert.Equal(donald1, donald2);
+        }
+
+        [Fact]
+        public void IEquatable_Are_These_The_Same()
+        {
+            Person donald1 = new Person("Donald", "trump tower", new DateTime(1946, 6, 14));
+            Person donald2 = new Person("Donald", "Trump Tower", new DateTime(1946, 6, 14));
+            Assert.NotEqual(donald1, donald2);
+        }

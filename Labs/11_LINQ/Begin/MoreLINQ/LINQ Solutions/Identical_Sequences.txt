@@ -1,0 +1,3 @@
+﻿            // LINQ {hint: SequenceEquals() )
+            bool match2 = wordsA.SequenceEqual(wordsB);
+            Assert.True(match2);

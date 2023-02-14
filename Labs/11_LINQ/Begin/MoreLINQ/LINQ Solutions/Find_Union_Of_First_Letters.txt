@@ -1,0 +1,3 @@
+﻿            // LINQ (hint: Select(), Intersect() )
+            var intersection2 = GetProducts().Select(p => p.ProductName[0]).Intersect(GetProducts().Select(p => p.Category[0]));
+            Assert.Equal(6, intersection2.Count());
